@@ -389,7 +389,7 @@ function drawImage(filename, imageObjectURL) {
         ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/16-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
         img.src = "DPCS/hotline.png";
         await img.decode();
-        //sai vì tưởng nhầm img height của top
+        //sai vì tưởng nhầm img height của top 
         ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/1.5-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
         canvas.toBlob(function(blob) {
             var result = document.getElementById('result');
