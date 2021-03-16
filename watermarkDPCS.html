@@ -43,6 +43,7 @@
 <style type="text/css">
 
 </style>
+<link href="style.css" rel="stylesheet">
 <!-- Fontawesome -->
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -66,7 +67,7 @@ $(document).ready(function() {
             autoStart: true
         }
     });
-
+    preloadResource();
 });
 function clickUpload(ev) {
     $('#product-image-upload').click();
@@ -190,6 +191,41 @@ image_uploader.addEventListener('change', function(e) {
 });
 
 var topImg, bottomImg, logoImg, websiteImg, nameImg, hotlineImg;
+async function preloadResource() {
+    var pArray = [];
+    if (!topImg) {
+        topImg = new Image();
+        topImg.src = "DPCS/top.png";
+        pArray.push(topImg.decode());
+    }
+    if (!bottomImg) {
+        bottomImg = new Image();
+        bottomImg.src = "DPCS/bottom.png";
+        pArray.push(bottomImg.decode());
+    }
+    if (!logoImg) {
+        logoImg = new Image();
+        logoImg.src = "DPCS/logo.png";
+        pArray.push(logoImg.decode());
+    }
+    if (!websiteImg) {
+        websiteImg = new Image();
+        websiteImg.src = "DPCS/website.png";
+        pArray.push(websiteImg.decode());
+    }
+
+    if (!nameImg) {
+        nameImg = new Image();
+        nameImg.src = "DPCS/name.png";
+        pArray.push(nameImg.decode());
+    }
+    if (!hotlineImg) {
+        hotlineImg = new Image();
+        hotlineImg.src = "DPCS/hotline.png";
+        pArray.push(hotlineImg.decode());
+    }
+    await Promise.all(pArray);
+}
 async function drawImage(filename, imageObjectURL) {
     // console.log(e);
     var canvas = document.createElement("CANVAS");
@@ -204,77 +240,29 @@ async function drawImage(filename, imageObjectURL) {
     ctx.drawImage(img, 0, 0);
     var isheight = canvas.width < canvas.height ? true : false;
 
-    if (!topImg){
-        let img = new Image();
-        img.src = "DPCS/top.png";
-        await img.decode();
-        topImg = img;
-    }
     ctx.drawImage(topImg, 0, 0, canvas.width, topImg.height*(isheight?canvas.width/topImg.width:canvas.height/topImg.width));
 
-    if (!bottomImg){
-        let img = new Image();
-        img.src = "DPCS/bottom.png";
-        await img.decode();
-        bottomImg = img;
-    }
+
     ctx.drawImage(bottomImg, 0, canvas.height-(isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width), canvas.width, isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width);
 
-    if (!logoImg){
-        let img = new Image();
-        img.src = "DPCS/logo.png";
-        await img.decode();
-        logoImg = img;
-    }
+
     ctx.drawImage(logoImg, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*logoImg.height/logoImg.width*(isheight?1:canvas.height/canvas.width));
 
-    if (!websiteImg){
-        let img = new Image();
-        img.src = "DPCS/website.png";
-        await img.decode();
-        websiteImg = img;
-    }
+
     //sai vì tưởng nhầm img height của bottom
     ctx.drawImage(websiteImg, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?websiteImg.height*canvas.width/websiteImg.width:websiteImg.height*canvas.height/websiteImg.width)/2-canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width));
 
-    if (!nameImg){
-        let img = new Image();
-        img.src = "DPCS/name.png";
-        await img.decode();
-        nameImg = img;
-    }
     //sai vì tưởng nhầm img height của top
     ctx.drawImage(nameImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?nameImg.height*canvas.width/nameImg.width:nameImg.height*canvas.height/nameImg.width)/16-canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width));
 
-    if (!hotlineImg){
-        let img = new Image();
-        img.src = "DPCS/hotline.png";
-        await img.decode();
-        hotlineImg = img;
-    }
     //sai vì tưởng nhầm img height của top 
     ctx.drawImage(hotlineImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?hotlineImg.height*canvas.width/hotlineImg.width:hotlineImg.height*canvas.height/hotlineImg.width)/1.5-canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width));
     canvas.toBlob(function(blob) {
         var result = document.getElementById('result');
-        // var imageElement = document.createElement("img");
-        // imageElement.classList.add("imageBlock");
-        // imageElement.setAttribute("download", filename);
-        // imageElement.setAttribute("draggable", false);
-        // url = URL.createObjectURL(blob);
-
-        // // imageElement.onload = function() {
-        // //     // no longer need to read the blob so it's revoked
-        // //     URL.revokeObjectURL(url);
-        // // };
-        // imageElement.src = url;
-        // console.log('here');
         url = URL.createObjectURL(blob);
         var divElement = document.createElement("div");
 
         divElement.classList.add("imageBlock");
-        // divElement.style.display = "inline-block";
-        // divElement.style.position = "relative";
-
 
         var thumbElement = document.createElement("img");
         thumbElement.classList.add("imageItem");
@@ -302,43 +290,7 @@ async function drawImage(filename, imageObjectURL) {
     });
 
 }
-// var buttonDownload = document.getElementById('btn-download');
-// buttonDownload.addEventListener('click', function(e) {
-//     var imageElement = document.getElementsByClassName("imageBlock")[0];
-//     var cnvs = document.createElement("CANVAS");
-//     ctx = cnvs.getContext('2d'),
 
-
-//         cnvs.width = imageElement.naturalWidth;
-//     cnvs.height = imageElement.naturalHeight;
-//     ctx.drawImage(imageElement, 0, 0);
-//     // var dataURL = canvas.toDataURL('image/png');
-//     // console.log(cnvs.toDataURL('image/png'));
-//     // console.log(mirror.src);
-//     var dataURL = cnvs.toDataURL('image/jpeg');
-//     button.href = dataURL;
-
-// });
-// function selectMode() {
-//     var btnSelect = document.getElementById('btn-select-mode');
-//     if (btnSelect.style.backgroundColor == 'white') {
-//         btnSelect.style.backgroundColor = 'blue';
-//         var result = document.getElementsByClassName('imageItem');
-//         for (var i = 0; i < result.length; i++) {
-//             if (result[i].style.zIndex == "") {
-//                 result[i].style.zIndex = 9999;
-//             }
-//         }
-//     } else {
-//         btnSelect.style.backgroundColor = 'white';
-//         var result = document.getElementsByClassName('imageItem');
-//         for (var i = 0; i < result.length; i++) {
-//             if (result[i].style.zIndex = 9999) {
-//                 result[i].style.zIndex = "";
-//             }
-//         }
-//     }
-// }
 function selectAll() {
     var btnSelect = document.getElementById('btn-select');
     if (btnSelect.innerHTML == "Select All") {

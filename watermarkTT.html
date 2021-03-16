@@ -12,7 +12,7 @@
 
 <body>
     <div style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;" ondrop="dropHandler(event);" ondragenter="dragEnterHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragEndHandler(event);">
-       <div class="container" role="main">
+        <div class="container" role="main">
             <div id="menu">
                 <div class="upload-btn-wrapper">
                     <button class="btn btn-primary" onclick="clickUpload(event);">Upload a file</button>
@@ -66,12 +66,13 @@ $(document).ready(function() {
             autoStart: true
         }
     });
-
+    preloadResource();
 });
 
 function clickUpload(ev) {
     $('#product-image-upload').click();
 }
+
 function dropHandler(ev) {
     document.getElementsByClassName('file-dropzone')[0].style.display = "none";
     console.log('File(s) dropped');
@@ -191,6 +192,41 @@ image_uploader.addEventListener('change', function(e) {
 });
 
 var bottomImg, logoImg, sdtImg, centerImg, center2Img, logobottomImg;
+async function preloadResource() {
+    var pArray = [];
+    if (!bottomImg) {
+        bottomImg = new Image();
+        bottomImg.src = "TT/bottom.png";
+        pArray.push(bottomImg.decode());
+    }
+    if (!logoImg) {
+        logoImg = new Image();
+        logoImg.src = "TT/logo.png";
+        pArray.push(logoImg.decode());
+    }
+    if (!sdtImg) {
+        sdtImg = new Image();
+        sdtImg.src = "TT/sdt.png";
+        pArray.push(sdtImg.decode());
+    }
+    if (!centerImg) {
+        centerImg = new Image();
+        centerImg.src = "TT/center.png";
+        pArray.push(centerImg.decode());
+    }
+
+    if (!center2Img) {
+        center2Img = new Image();
+        center2Img.src = "TT/center2.png";
+        pArray.push(center2Img.decode());
+    }
+    if (!logobottomImg) {
+        logobottomImg = new Image();
+        logobottomImg.src = "TT/logobottom.png";
+        pArray.push(logobottomImg.decode());
+    }
+    await Promise.all(pArray);
+}
 async function drawImage(filename, imageObjectURL) {
     // console.log(e);
     var canvas = document.createElement("CANVAS");
@@ -203,73 +239,24 @@ async function drawImage(filename, imageObjectURL) {
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
     var isheight = canvas.width < canvas.height ? true : false;
-    
 
-    if (!bottomImg) {
-        let img = new Image();
-        img.src = "TT/bottom.png";
-        await img.decode();
-        bottomImg = img;
-    }
-    ctx.drawImage(bottomImg, 0, canvas.height-(isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width), canvas.width, (isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width));
+    ctx.drawImage(bottomImg, 0, canvas.height - (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width), canvas.width, (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width));
 
-    if (!logoImg){
-        let img = new Image();
-        img.src = "TT/logo.png";
-        await img.decode();
-        logoImg = img;
-    }
-    ctx.drawImage(logoImg, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*logoImg.height/logoImg.width*(isheight?1:canvas.height/canvas.width));
+    ctx.drawImage(logoImg, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logoImg.height / logoImg.width * (isheight ? 1 : canvas.height / canvas.width));
 
-    if (!sdtImg){
-        let img = new Image();
-        img.src = "TT/sdt.png";
-        await img.decode();
-        sdtImg = img;
-    }
     //sai vì tưởng nhầm sdtImg height của bottom
-    ctx.drawImage(sdtImg, 40*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?sdtImg.height*canvas.width/sdtImg.width:sdtImg.height*canvas.height/sdtImg.width)/2, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*sdtImg.height/sdtImg.width*(isheight?1:canvas.height/canvas.width));
+    ctx.drawImage(sdtImg, 40 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - (isheight ? sdtImg.height * canvas.width / sdtImg.width : sdtImg.height * canvas.height / sdtImg.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * sdtImg.height / sdtImg.width * (isheight ? 1 : canvas.height / canvas.width));
 
-    if (!centerImg){
-        let img = new Image();
-        img.src = "TT/center.png";
-        await img.decode();
-        centerImg = img;
-    }
     //sai vì tưởng nhầm img height của top
-    ctx.drawImage(centerImg, canvas.width-canvas.width/2-canvas.width*0.35*(isheight?1:canvas.height/canvas.width)/2, canvas.height-canvas.height/2-canvas.width*0.35*centerImg.height/centerImg.width*(isheight?1:canvas.height/canvas.width)/2, canvas.width*0.35*(isheight?1:canvas.height/canvas.width), canvas.width*0.35*centerImg.height/centerImg.width*(isheight?1:canvas.height/canvas.width));
+    ctx.drawImage(centerImg, canvas.width - canvas.width / 2 - canvas.width * 0.35 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - canvas.height / 2 - canvas.width * 0.35 * centerImg.height / centerImg.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.35 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.35 * centerImg.height / centerImg.width * (isheight ? 1 : canvas.height / canvas.width));
 
-    if (!center2Img){
-        let img = new Image();
-        img.src = "TT/center2.png";
-        await img.decode();
-        center2Img = img;  
-    }
     //sai vì tưởng nhầm img height của top
-    ctx.drawImage(center2Img, canvas.width-canvas.width/2-canvas.width*0.35*(isheight?1:canvas.height/canvas.width)/2, canvas.height-canvas.height/2-canvas.width*0.35*center2Img.height/center2Img.width*(isheight?1:canvas.height/canvas.width)/2, canvas.width*0.35*(isheight?1:canvas.height/canvas.width), canvas.width*0.35*center2Img.height/center2Img.width*(isheight?1:canvas.height/canvas.width));
+    ctx.drawImage(center2Img, canvas.width - canvas.width / 2 - canvas.width * 0.35 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - canvas.height / 2 - canvas.width * 0.35 * center2Img.height / center2Img.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.35 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.35 * center2Img.height / center2Img.width * (isheight ? 1 : canvas.height / canvas.width));
 
-    if (!logobottomImg){
-        let img = new Image();
-        img.src = "TT/logobottom.png";
-        await img.decode();
-        logobottomImg = img;
-    }
     //sai vì tưởng nhầm img height của top 
-    ctx.drawImage(logobottomImg, canvas.width-canvas.width*0.15-canvas.width*0.25*(isheight?1:canvas.height/canvas.width)/2, canvas.height-(isheight?logobottomImg.height*canvas.width/logobottomImg.width:logobottomImg.height*canvas.height/logobottomImg.width)/10-canvas.width*0.3*logobottomImg.height/logobottomImg.width*(isheight?1:canvas.height/canvas.width)/2, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*logobottomImg.height/logobottomImg.width*(isheight?1:canvas.height/canvas.width));
+    ctx.drawImage(logobottomImg, canvas.width - canvas.width * 0.15 - canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - (isheight ? logobottomImg.height * canvas.width / logobottomImg.width : logobottomImg.height * canvas.height / logobottomImg.width) / 10 - canvas.width * 0.3 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width));
     canvas.toBlob(function(blob) {
         var result = document.getElementById('result');
-        // var imageElement = document.createElement("img");
-        // imageElement.classList.add("imageBlock");
-        // imageElement.setAttribute("download", filename);
-        // imageElement.setAttribute("draggable", false);
-        // url = URL.createObjectURL(blob);
-
-        // // imageElement.onload = function() {
-        // //     // no longer need to read the blob so it's revoked
-        // //     URL.revokeObjectURL(url);
-        // // };
-        // imageElement.src = url;
-        // console.log('here');
         url = URL.createObjectURL(blob);
         var divElement = document.createElement("div");
 
@@ -304,43 +291,6 @@ async function drawImage(filename, imageObjectURL) {
     });
 
 }
-// var buttonDownload = document.getElementById('btn-download');
-// buttonDownload.addEventListener('click', function(e) {
-//     var imageElement = document.getElementsByClassName("imageBlock")[0];
-//     var cnvs = document.createElement("CANVAS");
-//     ctx = cnvs.getContext('2d'),
-
-
-//         cnvs.width = imageElement.naturalWidth;
-//     cnvs.height = imageElement.naturalHeight;
-//     ctx.drawImage(imageElement, 0, 0);
-//     // var dataURL = canvas.toDataURL('image/png');
-//     // console.log(cnvs.toDataURL('image/png'));
-//     // console.log(mirror.src);
-//     var dataURL = cnvs.toDataURL('image/jpeg');
-//     button.href = dataURL;
-
-// });
-// function selectMode() {
-//     var btnSelect = document.getElementById('btn-select-mode');
-//     if (btnSelect.style.backgroundColor == 'white') {
-//         btnSelect.style.backgroundColor = 'blue';
-//         var result = document.getElementsByClassName('imageItem');
-//         for (var i = 0; i < result.length; i++) {
-//             if (result[i].style.zIndex == "") {
-//                 result[i].style.zIndex = 9999;
-//             }
-//         }
-//     } else {
-//         btnSelect.style.backgroundColor = 'white';
-//         var result = document.getElementsByClassName('imageItem');
-//         for (var i = 0; i < result.length; i++) {
-//             if (result[i].style.zIndex = 9999) {
-//                 result[i].style.zIndex = "";
-//             }
-//         }
-//     }
-// }
 function selectAll() {
     var btnSelect = document.getElementById('btn-select');
     if (btnSelect.innerHTML == "Select All") {
