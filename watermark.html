@@ -15,7 +15,7 @@
         <div class="container" role="main">
             <div id="menu">
                 <div class="upload-btn-wrapper">
-                    <button class="btn btn-primary" onclick="clickUpload(event);">Upload a file</button>
+                   <button class="btn btn-primary" onclick="document.getElementById('product-image-upload').click();">Upload a file</button>
                     <input type="file" name="product-image-upload" id="product-image-upload" accept=".jpeg, .jpg, .png, .webp" multiple />
                 </div>
                 <div>
@@ -70,9 +70,6 @@ $(document).ready(function() {
     });
 
 });
-function clickUpload(ev) {
-    $('#product-image-upload').click();
-}
 function dropHandler(ev) {
     document.getElementsByClassName('file-dropzone')[0].style.display = "none";
     console.log('File(s) dropped');
