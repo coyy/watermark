@@ -2,11 +2,11 @@
 <html>
 
 <head>
-    <title>Công cụ chèn logo DPCS</title>
+    <title>Công cụ chèn logo DPTT</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Công cụ tự chèn logo DPCS" />
+    <meta name="description" content="Công cụ tự chèn logo DPTT" />
     <meta name="author" content="Phoenixcoded" />
 </head>
 
@@ -368,26 +368,29 @@ function drawImage(filename, imageObjectURL) {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
-        img.src = "DPCS/top.png";
-        await img.decode();
-        var isheight = canvas.width < canvas.height ? true : false;
-        ctx.drawImage(img, 0, 0, canvas.width, img.height*(isheight?canvas.width/img.width:canvas.height/img.width));
-        img.src = "DPCS/bottom.png";
+        // img.src = "TT/top.png";
+        // await img.decode();
+        // var isheight = canvas.width < canvas.height ? true : false;
+        // ctx.drawImage(img, 0, 0, canvas.width, img.height*(isheight?canvas.width/img.width:canvas.height/img.width));
+        img.src = "TT/bottom.png";
         await img.decode();
         ctx.drawImage(img, 0, canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width), canvas.width, isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width);
-        img.src = "DPCS/logo.png";
+        img.src = "TT/logo.png";
         await img.decode();
         // ctx.drawImage(img, 40, 20, canvas.width*0.2, canvas.width*0.2*img.height/img.width);
         ctx.drawImage(img, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*img.height/img.width*(isheight?1:canvas.height/canvas.width));
-        img.src = "DPCS/website.png";
+
+        img.src = "TT/sdt.png";
         await img.decode();
         //sai vì tưởng nhầm img height của bottom
         ctx.drawImage(img, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/2-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
-        img.src = "DPCS/name.png";
-        await img.decode();
-        //sai vì tưởng nhầm img height của top
-        ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/16-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
-        img.src = "DPCS/hotline.png";
+
+        // img.src = "TT/name.png";
+        // await img.decode();
+        // //sai vì tưởng nhầm img height của top
+        // ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/16-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+
+        img.src = "TT/logobottom.png";
         await img.decode();
         //sai vì tưởng nhầm img height của top 
         ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/1.5-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
