@@ -368,9 +368,10 @@ function drawImage(filename, imageObjectURL) {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
+        var isheight = canvas.width < canvas.height ? true : false;
+        
         // img.src = "TT/top.png";
         // await img.decode();
-        // var isheight = canvas.width < canvas.height ? true : false;
         // ctx.drawImage(img, 0, 0, canvas.width, img.height*(isheight?canvas.width/img.width:canvas.height/img.width));
         img.src = "TT/bottom.png";
         await img.decode();
