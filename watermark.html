@@ -15,15 +15,15 @@
         <div class="container" role="main">
             <div id="menu">
                 <div class="upload-btn-wrapper">
-                    <button class="btn">Upload a file</button>
+                    <button class="btn btn-primary" onclick="clickUpload(event);">Upload a file</button>
                     <input type="file" name="product-image-upload" id="product-image-upload" accept=".jpeg, .jpg, .png, .webp" multiple />
                 </div>
-                <p>
-                    Thả hình ảnh, paste hoặc upload file tại đây.
-                    <br>
-                    Có thể up nhiều hình ảnh 1 lúc và chọn rồi bấm download ở dưới, có thể mất khá nhiều thời gian khi upload nhiều ảnh. Vui lòng đợi đến khi có cửa sổ tải xuống, tránh click nhiều lần.
-                </p>
                 <div>
+                    <p>
+                        Thả hình ảnh, paste hoặc upload file tại đây.
+                        <br>
+                        Có thể up nhiều hình ảnh 1 lúc và chọn rồi bấm download ở dưới, có thể mất khá nhiều thời gian khi upload nhiều ảnh. Vui lòng đợi đến khi có cửa sổ tải xuống, tránh click nhiều lần.
+                    </p>
                     <!-- <button class="button" id="btn-select-mode" onclick="selectMode()">Select Mode</button> -->
                     <button class="button" id="btn-select" onclick="selectAll()">Select All</button>
                     <button class="button" id="btn-download" onclick="generateZIP()" style="display: none">Download</button>
@@ -41,171 +41,9 @@
     </div>
 </body>
 <style type="text/css">
-.file-dropzone {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-    background: rgba(84, 97, 108, .8);
-    text-align: center;
-    padding-top: 40vh;
-    color: #fff;
-}
 
-.container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-.container.is-dragover {
-    border: 2px solid red;
-}
-
-#menu {
-    border: 1px dotted red;
-    padding: 2px;
-}
-
-/* Create four equal columns that floats next to each other */
-.column {
-    float: left;
-    /*width: 25%;*/
-    padding: 7px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-
-/* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 500px) {
-    .column {
-        width: 100%;
-    }
-
-    #content {
-        width: 100%;
-    }
-}
-
-
-
-.button {
-    background-color: forestgreen;
-    color: ghostwhite;
-    padding: 10px;
-    margin-bottom: 5px;
-    display: inline-block;
-    border-radius: 10px;
-    width: 100px;
-}
-
-#btn-select-mode {
-    background-color: white;
-    color: black;
-}
-
-
-
-.upload-btn-wrapper .btn {
-    /*transition: all 0.3s;*/
-    border: 2px solid gray;
-    color: gray;
-    background-color: white;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-
-.upload-btn-wrapper input[type=file] {
-
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-}
-
-.imageBlock {
-    width: 22%;
-    /*height: 100%;*/
-    height: 250px;
-    display: inline-block;
-    position: relative;
-    /*border: 1px solid black;*/
-    margin: 10px;
-    /*padding: 10px;*/
-}
-
-.imageBlock:hover {
-    opacity: .7;
-    background-color: #bcd3f5;
-    cursor: pointer;
-}
-
-.imageItem {
-    background-size: contain;
-    position: absolute;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    max-width: 100%;
-    max-height: 100%;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.imageZoomIcon {
-
-    position: absolute;
-    font-size: inherit;
-    width: 46px;
-    height: 46px;
-    /*        width: 100%;
-    height: 100%;*/
-    bottom: 0;
-    right: 0;
-    top: unset;
-    left: unset;
-}
-
-
-
-
-.thumbChecked {
-    opacity: .8;
-    width: 22%;
-    /*max-width: 23%;*/
-    max-height: auto;
-    margin: 10px;
-    /*padding: 12px;*/
-    /*box-shadow: 2px 2px 4px rgba(70, 70, 70, 0.6);*/
-    border: 2px solid #c32032;
-}
-
-
-@media only screen and (max-width: 600px) {
-    .imageBlock {
-        width: 43%;
-    }
-
-    .thumbChecked {
-        width: 43%;
-    }
-}
 </style>
+<link href="style.css" rel="stylesheet">
 <!-- Fontawesome -->
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -231,7 +69,9 @@ $(document).ready(function() {
     });
 
 });
-
+function clickUpload(ev) {
+    $('#product-image-upload').click();
+}
 function dropHandler(ev) {
     document.getElementsByClassName('file-dropzone')[0].style.display = "none";
     console.log('File(s) dropped');
