@@ -114,14 +114,9 @@
     color: black;
 }
 
-.upload-btn-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-}
 
 .upload-btn-wrapper .btn {
-    transition: all 0.3s;
+    /*transition: all 0.3s;*/
     border: 2px solid gray;
     color: gray;
     background-color: white;
@@ -362,16 +357,12 @@ async function drawImage(filename, imageObjectURL) {
     var img = new Image();
     img.src = imageObjectURL;
     await img.decode();
-    // img is ready to use
     console.log(`width: ${ img.width }, height: ${ img.height }`);
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
     var isheight = canvas.width < canvas.height ? true : false;
     
-    // img.src = "TT/top.png";
-    // await img.decode();
-    // ctx.drawImage(img, 0, 0, canvas.width, img.height*(isheight?canvas.width/img.width:canvas.height/img.width));
 
     if (!bottomImg) {
         let img = new Image();

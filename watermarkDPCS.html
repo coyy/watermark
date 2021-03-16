@@ -114,14 +114,10 @@
     color: black;
 }
 
-.upload-btn-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-}
+
 
 .upload-btn-wrapper .btn {
-    transition: all 0.3s;
+    /*transition: all 0.3s;*/
     border: 2px solid gray;
     color: gray;
     background-color: white;
@@ -354,90 +350,117 @@ image_uploader.addEventListener('change', function(e) {
 
 });
 
-
-function drawImage(filename, imageObjectURL) {
+var topImg, bottomImg, logoImg, websiteImg, nameImg, hotlineImg;
+async function drawImage(filename, imageObjectURL) {
     // console.log(e);
     var canvas = document.createElement("CANVAS");
     var ctx = canvas.getContext('2d');
-    (async () => {
-        var img = new Image();
-        img.src = imageObjectURL;
-        await img.decode();
-        // img is ready to use
-        console.log(`width: ${ img.width }, height: ${ img.height }`);
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+    var img = new Image();
+    img.src = imageObjectURL;
+    await img.decode();
+    // img is ready to use
+    console.log(`width: ${ img.width }, height: ${ img.height }`);
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    var isheight = canvas.width < canvas.height ? true : false;
+
+    if (!topImg){
+        let img = new Image();
         img.src = "DPCS/top.png";
         await img.decode();
-        var isheight = canvas.width < canvas.height ? true : false;
-        ctx.drawImage(img, 0, 0, canvas.width, img.height*(isheight?canvas.width/img.width:canvas.height/img.width));
+        topImg = img;
+    }
+    ctx.drawImage(topImg, 0, 0, canvas.width, topImg.height*(isheight?canvas.width/topImg.width:canvas.height/topImg.width));
+
+    if (!bottomImg){
+        let img = new Image();
         img.src = "DPCS/bottom.png";
         await img.decode();
-        ctx.drawImage(img, 0, canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width), canvas.width, isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width);
+        bottomImg = img;
+    }
+    ctx.drawImage(bottomImg, 0, canvas.height-(isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width), canvas.width, isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width);
+
+    if (!logoImg){
+        let img = new Image();
         img.src = "DPCS/logo.png";
         await img.decode();
-        // ctx.drawImage(img, 40, 20, canvas.width*0.2, canvas.width*0.2*img.height/img.width);
-        ctx.drawImage(img, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+        logoImg = img;
+    }
+    ctx.drawImage(logoImg, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*logoImg.height/logoImg.width*(isheight?1:canvas.height/canvas.width));
+
+    if (!websiteImg){
+        let img = new Image();
         img.src = "DPCS/website.png";
         await img.decode();
-        //sai vì tưởng nhầm img height của bottom
-        ctx.drawImage(img, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/2-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+        websiteImg = img;
+    }
+    //sai vì tưởng nhầm img height của bottom
+    ctx.drawImage(websiteImg, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?websiteImg.height*canvas.width/websiteImg.width:websiteImg.height*canvas.height/websiteImg.width)/2-canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width));
+
+    if (!nameImg){
+        let img = new Image();
         img.src = "DPCS/name.png";
         await img.decode();
-        //sai vì tưởng nhầm img height của top
-        ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/16-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+        nameImg = img;
+    }
+    //sai vì tưởng nhầm img height của top
+    ctx.drawImage(nameImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?nameImg.height*canvas.width/nameImg.width:nameImg.height*canvas.height/nameImg.width)/16-canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width));
+
+    if (!hotlineImg){
+        let img = new Image();
         img.src = "DPCS/hotline.png";
         await img.decode();
-        //sai vì tưởng nhầm img height của top 
-        ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/1.5-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
-        canvas.toBlob(function(blob) {
-            var result = document.getElementById('result');
-            // var imageElement = document.createElement("img");
-            // imageElement.classList.add("imageBlock");
-            // imageElement.setAttribute("download", filename);
-            // imageElement.setAttribute("draggable", false);
-            // url = URL.createObjectURL(blob);
+        hotlineImg = img;
+    }
+    //sai vì tưởng nhầm img height của top 
+    ctx.drawImage(hotlineImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?hotlineImg.height*canvas.width/hotlineImg.width:hotlineImg.height*canvas.height/hotlineImg.width)/1.5-canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width));
+    canvas.toBlob(function(blob) {
+        var result = document.getElementById('result');
+        // var imageElement = document.createElement("img");
+        // imageElement.classList.add("imageBlock");
+        // imageElement.setAttribute("download", filename);
+        // imageElement.setAttribute("draggable", false);
+        // url = URL.createObjectURL(blob);
 
-            // // imageElement.onload = function() {
-            // //     // no longer need to read the blob so it's revoked
-            // //     URL.revokeObjectURL(url);
-            // // };
-            // imageElement.src = url;
-            // console.log('here');
-            url = URL.createObjectURL(blob);
-            var divElement = document.createElement("div");
+        // // imageElement.onload = function() {
+        // //     // no longer need to read the blob so it's revoked
+        // //     URL.revokeObjectURL(url);
+        // // };
+        // imageElement.src = url;
+        // console.log('here');
+        url = URL.createObjectURL(blob);
+        var divElement = document.createElement("div");
 
-            divElement.classList.add("imageBlock");
-            // divElement.style.display = "inline-block";
-            // divElement.style.position = "relative";
+        divElement.classList.add("imageBlock");
+        // divElement.style.display = "inline-block";
+        // divElement.style.position = "relative";
 
 
-            var thumbElement = document.createElement("img");
-            thumbElement.classList.add("imageItem");
-            // thumbElement.style.backgroundImage = 'url("' + url + '")';
-            thumbElement.src = url;
-            // thumbElement.style.backgroundSize  = 'contain';
-            thumbElement.setAttribute("download", filename);
-            thumbElement.setAttribute("draggable", false);
+        var thumbElement = document.createElement("img");
+        thumbElement.classList.add("imageItem");
+        // thumbElement.style.backgroundImage = 'url("' + url + '")';
+        thumbElement.src = url;
+        // thumbElement.style.backgroundSize  = 'contain';
+        thumbElement.setAttribute("download", filename);
+        thumbElement.setAttribute("draggable", false);
 
-            var imageElement = document.createElement("a");
-            imageElement.classList.add("imageZoomIcon");
-            imageElement.setAttribute("href", url);
-            imageElement.setAttribute("data-fancybox", "gallery");
+        var imageElement = document.createElement("a");
+        imageElement.classList.add("imageZoomIcon");
+        imageElement.setAttribute("href", url);
+        imageElement.setAttribute("data-fancybox", "gallery");
 
-            var iconZoomElement = document.createElement("i");
-            iconZoomElement.classList.add("icon-zoom-in");
-            iconZoomElement.classList.add("icon-3x");
+        var iconZoomElement = document.createElement("i");
+        iconZoomElement.classList.add("icon-zoom-in");
+        iconZoomElement.classList.add("icon-3x");
 
-            imageElement.appendChild(iconZoomElement);
-            divElement.appendChild(thumbElement);
-            divElement.appendChild(imageElement);
+        imageElement.appendChild(iconZoomElement);
+        divElement.appendChild(thumbElement);
+        divElement.appendChild(imageElement);
 
-            result.appendChild(divElement);
-            canvas.remove();
-        });
-    })();
+        result.appendChild(divElement);
+        canvas.remove();
+    });
 
 }
 // var buttonDownload = document.getElementById('btn-download');
