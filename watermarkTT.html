@@ -375,7 +375,7 @@ function drawImage(filename, imageObjectURL) {
         // ctx.drawImage(img, 0, 0, canvas.width, img.height*(isheight?canvas.width/img.width:canvas.height/img.width));
         img.src = "TT/bottom.png";
         await img.decode();
-        ctx.drawImage(img, 0, canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width), canvas.width, isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width);
+        ctx.drawImage(img, 0, canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width), canvas.width, (isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width));
         img.src = "TT/logo.png";
         await img.decode();
         // ctx.drawImage(img, 40, 20, canvas.width*0.2, canvas.width*0.2*img.height/img.width);
@@ -384,17 +384,22 @@ function drawImage(filename, imageObjectURL) {
         img.src = "TT/sdt.png";
         await img.decode();
         //sai vì tưởng nhầm img height của bottom
-        ctx.drawImage(img, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/2-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+        ctx.drawImage(img, 40*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/2, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
 
-        // img.src = "TT/name.png";
-        // await img.decode();
-        // //sai vì tưởng nhầm img height của top
-        // ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/16-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+        img.src = "TT/center.png";
+        await img.decode();
+        //sai vì tưởng nhầm img height của top
+        ctx.drawImage(img, canvas.width-canvas.width/2-canvas.width*0.4*(isheight?1:canvas.height/canvas.width)/2, canvas.height-canvas.height/2-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/2, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+
+        img.src = "TT/center2.png";
+        await img.decode();
+        //sai vì tưởng nhầm img height của top
+        ctx.drawImage(img, canvas.width-canvas.width/2-canvas.width*0.4*(isheight?1:canvas.height/canvas.width)/2, canvas.height-canvas.height/2-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/2, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
 
         img.src = "TT/logobottom.png";
         await img.decode();
         //sai vì tưởng nhầm img height của top 
-        ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/1.5-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
+        ctx.drawImage(img, canvas.width-canvas.width*0.15-canvas.width*0.25*(isheight?1:canvas.height/canvas.width)/2, canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/10-canvas.width*0.3*img.height/img.width*(isheight?1:canvas.height/canvas.width)/2, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*img.height/img.width*(isheight?1:canvas.height/canvas.width));
         canvas.toBlob(function(blob) {
             var result = document.getElementById('result');
             // var imageElement = document.createElement("img");
