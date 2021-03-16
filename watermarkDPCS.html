@@ -368,26 +368,26 @@ function drawImage(filename, imageObjectURL) {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0);
-        img.src = "https://aothun247.vn/DPCS/top.png";
+        img.src = "DPCS/top.png";
         await img.decode();
         var isheight = canvas.width < canvas.height ? true : false;
         ctx.drawImage(img, 0, 0, canvas.width, img.height*(isheight?canvas.width/img.width:canvas.height/img.width));
-        img.src = "https://aothun247.vn/DPCS/bottom.png";
+        img.src = "DPCS/bottom.png";
         await img.decode();
         ctx.drawImage(img, 0, canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width), canvas.width, isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width);
-        img.src = "https://aothun247.vn/DPCS/logo.png";
+        img.src = "DPCS/logo.png";
         await img.decode();
         // ctx.drawImage(img, 40, 20, canvas.width*0.2, canvas.width*0.2*img.height/img.width);
         ctx.drawImage(img, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*img.height/img.width*(isheight?1:canvas.height/canvas.width));
-        img.src = "https://aothun247.vn/DPCS/website.png";
+        img.src = "DPCS/website.png";
         await img.decode();
         //sai vì tưởng nhầm img height của bottom
         ctx.drawImage(img, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/2-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
-        img.src = "https://aothun247.vn/DPCS/name.png";
+        img.src = "DPCS/name.png";
         await img.decode();
         //sai vì tưởng nhầm img height của top
         ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/16-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
-        img.src = "https://aothun247.vn/DPCS/hotline.png";
+        img.src = "DPCS/hotline.png";
         await img.decode();
         //sai vì tưởng nhầm img height của top
         ctx.drawImage(img, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?img.height*canvas.width/img.width:img.height*canvas.height/img.width)/1.5-canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*img.height/img.width*(isheight?1:canvas.height/canvas.width));
