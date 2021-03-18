@@ -241,7 +241,7 @@ async function drawImage(filename, imageObjectURL) {
     ctx.drawImage(logoImg, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logoImg.height / logoImg.width * (isheight ? 1 : canvas.height / canvas.width));
 
     //sai vì tưởng nhầm sdtImg height của bottom
-    ctx.drawImage(sdtImg, 40 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - (isheight ? sdtImg.height * canvas.width / sdtImg.width : sdtImg.height * canvas.height / sdtImg.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * sdtImg.height / sdtImg.width * (isheight ? 1 : canvas.height / canvas.width));
+    ctx.drawImage(sdtImg, canvas.width * 0.05, canvas.height - (isheight ? sdtImg.height * canvas.width / sdtImg.width : sdtImg.height * canvas.height / sdtImg.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * sdtImg.height / sdtImg.width * (isheight ? 1 : canvas.height / canvas.width));
 
     //sai vì tưởng nhầm img height của top
     ctx.drawImage(centerImg, canvas.width - canvas.width / 2 - canvas.width * 0.37 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - canvas.height / 2 - canvas.width * 0.37 * centerImg.height / centerImg.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.37 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.37 * centerImg.height / centerImg.width * (isheight ? 1 : canvas.height / canvas.width));
