@@ -190,21 +190,21 @@ image_uploader.addEventListener('change', function(e) {
 var bottomImg, logoImg, sdtImg, centerImg, center2Img, logobottomImg;
 async function preloadResource() {
     var pArray = [];
-    if (!bottomImg) {
-        bottomImg = new Image();
-        bottomImg.src = "TT/bottom.png";
-        pArray.push(bottomImg.decode());
-    }
+    // if (!bottomImg) {
+    //     bottomImg = new Image();
+    //     bottomImg.src = "TT/bottom.png";
+    //     pArray.push(bottomImg.decode());
+    // }
     if (!logoImg) {
         logoImg = new Image();
-        logoImg.src = "TT/logo.png";
+        logoImg.src = "TT/logon1.png";
         pArray.push(logoImg.decode());
     }
-    if (!sdtImg) {
-        sdtImg = new Image();
-        sdtImg.src = "TT/sdt.png";
-        pArray.push(sdtImg.decode());
-    }
+    // if (!sdtImg) {
+    //     sdtImg = new Image();
+    //     sdtImg.src = "TT/sdt.png";
+    //     pArray.push(sdtImg.decode());
+    // }
     if (!centerImg) {
         centerImg = new Image();
         centerImg.src = "TT/center.png";
@@ -218,39 +218,44 @@ async function preloadResource() {
     }
     if (!logobottomImg) {
         logobottomImg = new Image();
-        logobottomImg.src = "TT/logobottom.png";
+        logobottomImg.src = "TT/logobottomn1.png";
         pArray.push(logobottomImg.decode());
     }
     await Promise.all(pArray);
 }
 async function drawImage(filename, imageObjectURL) {
     // console.log(e);
+    var image = new Image();
+    image.src = imageObjectURL;
+    await image.decode();
+    console.log(`width: ${ image.width }, height: ${ image.height }`);
+    var isheight = image.width < image.height ? true : false;
+    var base_size = isheight?image.height:image.width;
+    var scale_ratio = image.width < 600 || image.height < 600 ? 600/base_size:1;
+    var frame_ratio = isheight?image.height/image.width:image.width/image.width;
+    var wmscale_ratio = frame_ratio > 1 ? 1 : frame_ratio;
+    var fix_size = scale_ratio*base_size;
     var canvas = document.createElement("CANVAS");
-    var ctx = canvas.getContext('2d');
-    var img = new Image();
-    img.src = imageObjectURL;
-    await img.decode();
-    console.log(`width: ${ img.width }, height: ${ img.height }`);
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
-    var isheight = canvas.width < canvas.height ? true : false;
+    var context = canvas.getContext('2d');
+    canvas.width = image.width*scale_ratio;
+    canvas.height = image.height*scale_ratio;
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-    ctx.drawImage(bottomImg, 0, canvas.height - (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width), canvas.width, (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width));
+    // context.drawImage(bottomImg, 0, canvas.height - (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width), canvas.width, (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width));
 
-    ctx.drawImage(logoImg, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logoImg.height / logoImg.width * (isheight ? 1 : canvas.height / canvas.width));
+    context.drawImage(logoImg, fix_size * 0.01 * frame_ratio, fix_size * 0.003 * frame_ratio , canvas.width * 0.33 * frame_ratio, logoImg.height/logoImg.width * canvas.width * 0.33 * frame_ratio);//lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
 
-    //sai vì tưởng nhầm sdtImg height của bottom
-    ctx.drawImage(sdtImg, canvas.width * 0.05, canvas.height - (isheight ? sdtImg.height * canvas.width / sdtImg.width : sdtImg.height * canvas.height / sdtImg.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * sdtImg.height / sdtImg.width * (isheight ? 1 : canvas.height / canvas.width));
+    // context.drawImage(logoImg, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logoImg.height / logoImg.width * (isheight ? 1 : canvas.height / canvas.width));
 
-    //sai vì tưởng nhầm img height của top
-    ctx.drawImage(centerImg, canvas.width - canvas.width / 2 - canvas.width * 0.37 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - canvas.height / 2 - canvas.width * 0.37 * centerImg.height / centerImg.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.37 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.37 * centerImg.height / centerImg.width * (isheight ? 1 : canvas.height / canvas.width));
+    // context.drawImage(sdtImg, canvas.width * 0.05, canvas.height - (isheight ? sdtImg.height * canvas.width / sdtImg.width : sdtImg.height * canvas.height / sdtImg.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * sdtImg.height / sdtImg.width * (isheight ? 1 : canvas.height / canvas.width));
 
-    //sai vì tưởng nhầm img height của top
-    ctx.drawImage(center2Img, canvas.width - canvas.width / 2 - canvas.width * 0.37 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - canvas.height / 2 - canvas.width * 0.37 * center2Img.height / center2Img.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.37 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.37 * center2Img.height / center2Img.width * (isheight ? 1 : canvas.height / canvas.width));
+    context.drawImage(centerImg, canvas.width - canvas.width / 2 - canvas.width * 0.3 * frame_ratio / 2, canvas.height - canvas.height / 2 - centerImg.height / centerImg.width * canvas.width * 0.3 * frame_ratio / 2, canvas.width * 0.3 * frame_ratio, centerImg.height / centerImg.width * canvas.width * 0.3 * frame_ratio);
 
-    //sai vì tưởng nhầm img height của top 
-    ctx.drawImage(logobottomImg, canvas.width - canvas.width * 0.15 - canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - (isheight ? logobottomImg.height * canvas.width / logobottomImg.width : logobottomImg.height * canvas.height / logobottomImg.width) / 10 - canvas.width * 0.3 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width));
+    context.drawImage(center2Img, canvas.width - canvas.width / 2 - canvas.width * 0.3 * frame_ratio / 2, canvas.height - canvas.height / 2 - center2Img.height / center2Img.width * canvas.width * 0.3 * frame_ratio / 2, canvas.width * 0.3 * frame_ratio, center2Img.height / center2Img.width * canvas.width * 0.3 * frame_ratio);
+
+    context.drawImage(logobottomImg, canvas.width - fix_size * 0.01 * frame_ratio - canvas.width * 0.33 * frame_ratio, canvas.height - fix_size * 0.006 * frame_ratio - logobottomImg.height/logobottomImg.width * canvas.width * 0.33 * frame_ratio, canvas.width * 0.33 * frame_ratio, logobottomImg.height/logobottomImg.width * canvas.width * 0.33 * frame_ratio);
+
+    // context.drawImage(logobottomImg, canvas.width - canvas.width * 0.15 - canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - (isheight ? logobottomImg.height * canvas.width / logobottomImg.width : logobottomImg.height * canvas.height / logobottomImg.width) / 10 - canvas.width * 0.3 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width));
     canvas.toBlob(function(blob) {
         var result = document.getElementById('result');
         url = URL.createObjectURL(blob);

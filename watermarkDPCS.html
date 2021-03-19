@@ -226,7 +226,7 @@ async function preloadResource() {
 async function drawImage(filename, imageObjectURL) {
     // console.log(e);
     var canvas = document.createElement("CANVAS");
-    var ctx = canvas.getContext('2d');
+    var context = canvas.getContext('2d');
     var img = new Image();
     img.src = imageObjectURL;
     await img.decode();
@@ -234,26 +234,26 @@ async function drawImage(filename, imageObjectURL) {
     console.log(`width: ${ img.width }, height: ${ img.height }`);
     canvas.width = img.width;
     canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
+    context.drawImage(img, 0, 0);
     var isheight = canvas.width < canvas.height ? true : false;
 
-    ctx.drawImage(topImg, 0, 0, canvas.width, topImg.height*(isheight?canvas.width/topImg.width:canvas.height/topImg.width));
+    context.drawImage(topImg, 0, 0, canvas.width, topImg.height*(isheight?canvas.width/topImg.width:canvas.height/topImg.width));
 
 
-    ctx.drawImage(bottomImg, 0, canvas.height-(isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width), canvas.width, isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width);
+    context.drawImage(bottomImg, 0, canvas.height-(isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width), canvas.width, isheight?bottomImg.height*canvas.width/bottomImg.width:bottomImg.height*canvas.height/bottomImg.width);
 
 
-    ctx.drawImage(logoImg, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*logoImg.height/logoImg.width*(isheight?1:canvas.height/canvas.width));
+    context.drawImage(logoImg, 0, 0, canvas.width*0.25*(isheight?1:canvas.height/canvas.width), canvas.width*0.25*logoImg.height/logoImg.width*(isheight?1:canvas.height/canvas.width));
 
 
     //sai vì tưởng nhầm img height của bottom
-    ctx.drawImage(websiteImg, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?websiteImg.height*canvas.width/websiteImg.width:websiteImg.height*canvas.height/websiteImg.width)/2-canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width));
+    context.drawImage(websiteImg, 20*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?websiteImg.height*canvas.width/websiteImg.width:websiteImg.height*canvas.height/websiteImg.width)/2-canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width)/6, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*websiteImg.height/websiteImg.width*(isheight?1:canvas.height/canvas.width));
 
     //sai vì tưởng nhầm img height của top
-    ctx.drawImage(nameImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?nameImg.height*canvas.width/nameImg.width:nameImg.height*canvas.height/nameImg.width)/16-canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width));
+    context.drawImage(nameImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), (isheight?nameImg.height*canvas.width/nameImg.width:nameImg.height*canvas.height/nameImg.width)/16-canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width)/16, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*nameImg.height/nameImg.width*(isheight?1:canvas.height/canvas.width));
 
     //sai vì tưởng nhầm img height của top 
-    ctx.drawImage(hotlineImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?hotlineImg.height*canvas.width/hotlineImg.width:hotlineImg.height*canvas.height/hotlineImg.width)/1.5-canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width));
+    context.drawImage(hotlineImg, canvas.width-20*0.4*(isheight?1:canvas.height/canvas.width)-canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.height-(isheight?hotlineImg.height*canvas.width/hotlineImg.width:hotlineImg.height*canvas.height/hotlineImg.width)/1.5-canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width)/1.5, canvas.width*0.4*(isheight?1:canvas.height/canvas.width), canvas.width*0.4*hotlineImg.height/hotlineImg.width*(isheight?1:canvas.height/canvas.width));
     canvas.toBlob(function(blob) {
         var result = document.getElementById('result');
         url = URL.createObjectURL(blob);

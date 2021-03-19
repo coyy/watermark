@@ -201,7 +201,7 @@ async function preloadResource() {
 async function drawImage(filename, imageObjectURL) {
     // console.log(e);
  	var canvas = document.createElement("CANVAS");
-    var ctx = canvas.getContext('2d');
+    var context = canvas.getContext('2d');
     var img = new Image();
     img.src = imageObjectURL;
     await img.decode();
@@ -209,14 +209,14 @@ async function drawImage(filename, imageObjectURL) {
     console.log(`width: ${ img.width }, height: ${ img.height }`);
     canvas.width = img.width;
     canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
+    context.drawImage(img, 0, 0);
 
     var isheight = canvas.width < canvas.height ? true : false;
  	var watermarkHeight = isheight ? canvas.width : canvas.height;
     var watermarkWidth = isheight ? canvas.width : canvas.height;
     var watermarkleft = (canvas.width - watermarkWidth) / 2;
     var watermarktop = (canvas.height - watermarkHeight) / 2;
-    ctx.drawImage(watermarkImg,  watermarkleft, watermarktop, watermarkWidth, watermarkHeight);
+    context.drawImage(watermarkImg,  watermarkleft, watermarktop, watermarkWidth, watermarkHeight);
     canvas.toBlob(function(blob) {
         url = URL.createObjectURL(blob);
         var divElement = document.createElement("div");
