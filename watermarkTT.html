@@ -235,6 +235,7 @@ async function drawImage(filename, imageObjectURL) {
     var frame_ratio = isheight?image.height/image.width:image.width/image.width;
     var wmscale_ratio = frame_ratio > 1 ? 1 : frame_ratio;
     var fix_size = scale_ratio*base_size;
+    
     var canvas = document.createElement("CANVAS");
     var context = canvas.getContext('2d');
     canvas.width = image.width*scale_ratio;
