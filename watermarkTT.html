@@ -234,7 +234,7 @@ async function drawImage(filename, imageObjectURL) {
 
     if (mark_type == 1){
         context.drawImage(wmLogo1, fix_size * 0.01 * wmscale_ratio, fix_size * 0.003 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogo1.height / wmLogo1.width * fix_size * 0.33 * wmscale_ratio); //lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
-        context.drawImage(wmLogoBottom1, canvas.width - fix_size * 0.01 * wmscale_ratio - fix_size * 0.33 * wmscale_ratio, canvas.height - fix_size * 0.006 * wmscale_ratio - wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio);
+        context.drawImage(wmLogoBottom1, canvas.width - fix_size * 0.01 * wmscale_ratio - fix_size * 0.33 * wmscale_ratio, canvas.height - fix_size * 0.01 * wmscale_ratio - wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio);
     }
     else {
         context.drawImage(wmBottom, 0, canvas.height - (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width), canvas.width, (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width));
