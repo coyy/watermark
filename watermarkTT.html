@@ -239,8 +239,8 @@ async function drawImage(filename, imageObjectURL) {
     else {
         context.drawImage(wmBottom, 0, canvas.height - (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width), canvas.width, (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width));
         context.drawImage(wmLogo, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
-        context.drawImage(wmHotline, canvas.width * 0.05, canvas.height - (isheight ? wmHotline.height * canvas.width / wmHotline.width : wmHotline.height * canvas.height / wmHotline.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmHotline.height / wmHotline.width * (isheight ? 1 : canvas.height / canvas.width));
-        context.drawImage(wmLogoBottom, canvas.width - canvas.width * 0.15 - canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - (isheight ? wmLogoBottom.height * canvas.width / wmLogoBottom.width : wmLogoBottom.height * canvas.height / wmLogoBottom.width) / 10 - canvas.width * 0.3 * wmLogoBottom.height / wmLogoBottom.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoBottom.height / wmLogoBottom.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmHotline, canvas.width * 0.05, canvas.height - fix_size / 20 - fix_size * 0.4 * wmHotline.height/wmHotline.width/2, fix_size * 0.4, fix_size * 0.4 * wmHotline.height/wmHotline.width);
+        context.drawImage(wmLogoBottom, canvas.width - canvas.width * 0.15 - fix_size * 0.25  / 2, canvas.height - fix_size / 12 - fix_size * 0.3  / 2, fix_size * 0.25 , fix_size * 0.25  * wmLogoBottom.height/wmLogoBottom.width);
     }
 
 
