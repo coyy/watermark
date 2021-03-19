@@ -1,3 +1,114 @@
+
+
+*,
+*:after,
+*:before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    font-size: 1.125rem;
+    background-color: #f5f7fb;
+    color: #4f5d7e;
+    font-weight: 500;
+}
+
+fieldset {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    max-width: 400px;
+}
+
+legend {
+    margin-bottom: 0.25rem;
+}
+
+details {
+    position: relative;
+
+    summary {
+        background-color: #fff;
+        list-style: none; // Remove arrow
+        border: 2px solid #b5bfd9;
+        padding: 0.75rem 0.75rem;
+        position: relative;
+        border-radius: 8px;
+        padding-right: 3rem;
+        cursor: pointer;
+        &::-webkit-details-marker {
+            display: none; // Remove arrow
+        }
+
+        &:focus {
+            outline: 0;
+        }
+
+        &:hover {
+            border-color: #2260ff;
+        }
+
+        span {
+            position: absolute;
+            top: 50%;
+            right: 0.75rem;
+            transform: translateY(-50%);
+            transform-origin: center center;
+        }
+    }
+
+    &[open]summary {
+        border-color: #2260ff;
+        box-shadow: 0 0 0 4px #b5c9fc;
+        span {
+            transform: scaleY(-1) translateY(50%);
+        }
+    }
+
+    div {
+        margin-top: 8px;
+        background-color: #fff;
+        border: 2px solid #b5bfd9;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+        box-shadow: 0 3px 7px 0 #c8cfe1;
+
+        label {
+            position: relative;
+            cursor: pointer;
+        }
+
+        input {
+            appearance: none;
+            position: absolute;
+        }
+
+        input:checked + span {
+            background-color: #e9efff;
+            color: #2260ff;
+        }
+
+        span:hover {
+            background-color: #e9efff;
+        }
+
+        span {
+            display: block;
+            padding: 0.625rem;
+            border-radius: 8px;
+            margin-top: 0.25rem;
+        }
+    }
+}
+
+
+
 .file-dropzone {
     position: absolute;
     left: 0;

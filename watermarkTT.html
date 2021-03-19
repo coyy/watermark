@@ -17,6 +17,10 @@
                 <div class="upload-btn-wrapper">
                     <button class="btn btn-primary" onclick="document.getElementById('product-image-upload').click();">Upload a file</button>
                     <input type="file" name="product-image-upload" id="product-image-upload" accept=".jpeg, .jpg, .png, .webp" multiple />
+                    <select class="form-select" aria-label="Default select example" id="sl-mark-type">
+                      <option selected value="0">Mặc định</option>
+                      <option value="1">Khách Sạn</option>
+                    </select>
                 </div>
                 <div>
                     <p>
@@ -32,6 +36,7 @@
             <div id="result">
                 <!-- <img id="imageBlock"/ download="new-image-name.jpg"> -->
             </div>
+                           
         </div>
         <div class="file-dropzone" style="display: none;">
             <h1>
@@ -67,8 +72,9 @@ $(document).ready(function() {
             autoStart: true
         }
     });
-   
+
 });
+
 function dropHandler(ev) {
     document.getElementsByClassName('file-dropzone')[0].style.display = "none";
     console.log('File(s) dropped');
@@ -187,76 +193,60 @@ image_uploader.addEventListener('change', function(e) {
 
 });
 
-var bottomImg, logoImg, sdtImg, centerImg, center2Img, logobottomImg;
 async function preloadResource() {
-    var pArray = [];
-    // if (!bottomImg) {
-    //     bottomImg = new Image();
-    //     bottomImg.src = "TT/bottom.png";
-    //     pArray.push(bottomImg.decode());
-    // }
-    if (!logoImg) {
-        logoImg = new Image();
-        logoImg.src = "TT/logon1.png";
-        pArray.push(logoImg.decode());
-    }
-    // if (!sdtImg) {
-    //     sdtImg = new Image();
-    //     sdtImg.src = "TT/sdt.png";
-    //     pArray.push(sdtImg.decode());
-    // }
-    if (!centerImg) {
-        centerImg = new Image();
-        centerImg.src = "TT/center.png";
-        pArray.push(centerImg.decode());
-    }
-
-    if (!center2Img) {
-        center2Img = new Image();
-        center2Img.src = "TT/center2.png";
-        pArray.push(center2Img.decode());
-    }
-    if (!logobottomImg) {
-        logobottomImg = new Image();
-        logobottomImg.src = "TT/logobottomn1.png";
-        pArray.push(logobottomImg.decode());
-    }
-    await Promise.all(pArray);
+    window.wmBottom = new Image();
+    window.wmLogo = new Image();
+    window.wmLogo1 = new Image();
+    window.wmHotline = new Image();
+    window.wmCenter = new Image();
+    window.wmCenter2 = new Image();
+    window.wmLogoBottom = new Image();
+    window.wmLogoBottom1 = new Image();
+    wmBottom.src = "TT/bottom.png";
+    wmLogo.src = "TT/logo.png";
+    wmLogo1.src = "TT/logon1.png";
+    wmHotline.src = "TT/sdt.png";
+    wmCenter.src = "TT/center.png";
+    wmCenter2.src = "TT/center2.png";
+    wmLogoBottom.src = "TT/logobottom.png";
+    wmLogoBottom1.src = "TT/logobottomn1.png";
+    await Promise.all([wmBottom.decode(), wmLogo.decode(), wmLogo1.decode(), wmHotline.decode(), wmCenter.decode(), wmCenter2.decode(), wmLogoBottom.decode(), wmLogoBottom1.decode()]);
 }
 async function drawImage(filename, imageObjectURL) {
     // console.log(e);
     var image = new Image();
+    var mark_type = $('#sl-mark-type')[0].value;
     image.src = imageObjectURL;
     await image.decode();
     console.log(`width: ${ image.width }, height: ${ image.height }`);
     var isheight = image.width < image.height ? true : false;
-    var base_size = isheight?image.width:image.height;
-    var scale_ratio = image.width < 600 || image.height < 600 ? 600/base_size:1;
-    var frame_ratio = isheight?image.height/image.width:image.width/image.width;
+    var base_size = isheight ? image.width : image.height;
+    var scale_ratio = image.width < 600 || image.height < 600 ? 600 / base_size : 1;
+    var frame_ratio = isheight ? image.height / image.width : image.width / image.width;
     var wmscale_ratio = frame_ratio;
-    var fix_size = scale_ratio*base_size;
-    
+    var fix_size = scale_ratio * base_size;
+
     var canvas = document.createElement("CANVAS");
     var context = canvas.getContext('2d');
-    canvas.width = image.width*scale_ratio;
-    canvas.height = image.height*scale_ratio;
+    canvas.width = image.width * scale_ratio;
+    canvas.height = image.height * scale_ratio;
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-    // context.drawImage(bottomImg, 0, canvas.height - (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width), canvas.width, (isheight ? bottomImg.height * canvas.width / bottomImg.width : bottomImg.height * canvas.height / bottomImg.width));
+    if (mark_type == 1){
+        context.drawImage(wmLogo1, fix_size * 0.01 * wmscale_ratio, fix_size * 0.003 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogo1.height / wmLogo1.width * fix_size * 0.33 * wmscale_ratio); //lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
+        context.drawImage(wmLogoBottom1, canvas.width - fix_size * 0.01 * wmscale_ratio - fix_size * 0.33 * wmscale_ratio, canvas.height - fix_size * 0.006 * wmscale_ratio - wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio);
+    }
+    else {
+        context.drawImage(wmBottom, 0, canvas.height - (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width), canvas.width, (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width));
+        context.drawImage(wmLogo, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmHotline, canvas.width * 0.05, canvas.height - (isheight ? wmHotline.height * canvas.width / wmHotline.width : wmHotline.height * canvas.height / wmHotline.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmHotline.height / wmHotline.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmLogoBottom, canvas.width - canvas.width * 0.15 - canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - (isheight ? wmLogoBottom.height * canvas.width / wmLogoBottom.width : wmLogoBottom.height * canvas.height / wmLogoBottom.width) / 10 - canvas.width * 0.3 * wmLogoBottom.height / wmLogoBottom.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoBottom.height / wmLogoBottom.width * (isheight ? 1 : canvas.height / canvas.width));
+    }
 
-    context.drawImage(logoImg, fix_size * 0.01 * wmscale_ratio, fix_size * 0.003 * wmscale_ratio , fix_size * 0.33 * wmscale_ratio, logoImg.height/logoImg.width * fix_size * 0.33 * wmscale_ratio);//lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
 
-    // context.drawImage(logoImg, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logoImg.height / logoImg.width * (isheight ? 1 : canvas.height / canvas.width));
+    context.drawImage(wmCenter, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio);
+    context.drawImage(wmCenter2, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio);
 
-    // context.drawImage(sdtImg, canvas.width * 0.05, canvas.height - (isheight ? sdtImg.height * canvas.width / sdtImg.width : sdtImg.height * canvas.height / sdtImg.width) / 2, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * sdtImg.height / sdtImg.width * (isheight ? 1 : canvas.height / canvas.width));
-
-    context.drawImage(centerImg, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - centerImg.height / centerImg.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, centerImg.height / centerImg.width * fix_size * 0.3 * wmscale_ratio);
-
-    context.drawImage(center2Img, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - center2Img.height / center2Img.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, center2Img.height / center2Img.width * fix_size * 0.3 * wmscale_ratio);
-
-    context.drawImage(logobottomImg, canvas.width - fix_size * 0.01 * wmscale_ratio - fix_size * 0.33 * wmscale_ratio, canvas.height - fix_size * 0.006 * wmscale_ratio - logobottomImg.height/logobottomImg.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, logobottomImg.height/logobottomImg.width * fix_size * 0.33 * wmscale_ratio);
-
-    // context.drawImage(logobottomImg, canvas.width - canvas.width * 0.15 - canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.height - (isheight ? logobottomImg.height * canvas.width / logobottomImg.width : logobottomImg.height * canvas.height / logobottomImg.width) / 10 - canvas.width * 0.3 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width) / 2, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * logobottomImg.height / logobottomImg.width * (isheight ? 1 : canvas.height / canvas.width));
     canvas.toBlob(function(blob) {
         var result = document.getElementById('result');
         url = URL.createObjectURL(blob);
@@ -273,6 +263,7 @@ async function drawImage(filename, imageObjectURL) {
         thumbElement.src = url;
         // thumbElement.style.backgroundSize  = 'contain';
         thumbElement.setAttribute("download", filename);
+        thumbElement.setAttribute("origin", imageObjectURL);
         thumbElement.setAttribute("draggable", false);
 
         var imageElement = document.createElement("a");
@@ -293,6 +284,7 @@ async function drawImage(filename, imageObjectURL) {
     });
 
 }
+
 function selectAll() {
     var btnSelect = document.getElementById('btn-select');
     if (btnSelect.innerHTML == "Select All") {
