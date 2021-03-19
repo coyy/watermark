@@ -272,7 +272,7 @@ async function markImage(imageObjectURL, mark_type){
     var image = new Image();
     image.src = imageObjectURL;
     await image.decode();
-    console.log(`width: ${ image.width }, height: ${ image.height }`);
+    
     var isheight = image.width < image.height ? true : false;
     var base_size = isheight ? image.width : image.height;
     var scale_ratio = image.width < 600 || image.height < 600 ? 600 / base_size : 1;
@@ -286,6 +286,7 @@ async function markImage(imageObjectURL, mark_type){
     canvas.height = image.height * scale_ratio;
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
+    // console.log(await getImageBrightness(canvas, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio));
     if (mark_type == 1){
         context.drawImage(wmLogo1, fix_size * 0.01 * wmscale_ratio, fix_size * 0.003 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogo1.height / wmLogo1.width * fix_size * 0.33 * wmscale_ratio); //lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
         context.drawImage(wmLogoBottom1, canvas.width - fix_size * 0.01 * wmscale_ratio - fix_size * 0.33 * wmscale_ratio, canvas.height - fix_size * 0.01 * wmscale_ratio - wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio);
@@ -296,11 +297,43 @@ async function markImage(imageObjectURL, mark_type){
         context.drawImage(wmHotline, canvas.width * 0.05, canvas.height - fix_size / 20 - fix_size * 0.4 * wmHotline.height/wmHotline.width/2, fix_size * 0.4, fix_size * 0.4 * wmHotline.height/wmHotline.width);
         context.drawImage(wmLogoBottom, canvas.width - canvas.width * 0.15 - fix_size * 0.25  / 2, canvas.height - fix_size / 12 - fix_size * 0.3  / 2, fix_size * 0.25 , fix_size * 0.25  * wmLogoBottom.height/wmLogoBottom.width);
     }
-
-
-    context.drawImage(wmCenter, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio);
-    context.drawImage(wmCenter2, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio);
+    // var brightness = await getImageBrightness(canvas, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio);
+    // if (brightness < 8){
+        context.drawImage(wmCenter, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio);
+    // }else {   
+        context.drawImage(wmCenter2, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio);
+    // }
     return canvas;
+}
+async function getImageBrightness(image, startX, startY, widthI, heightI){
+    var colorSum = 0;
+    var canvas = document.createElement("canvas");
+    canvas.width = widthI;
+    canvas.height = heightI;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(image, -startX, -startY);
+
+    var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    // var blob = await new Promise(resolve => canvas.toBlob(resolve));  
+    // url = URL.createObjectURL(blob);
+    // console.log(url);
+    var data = imageData.data;
+    var r,g,b,avg;
+
+      for(var x = 0, len = data.length; x < len; x+=4) {
+        r = data[x];
+        g = data[x+1];
+        b = data[x+2];
+
+        avg = Math.floor((r+g+b)/3);
+        colorSum += avg;
+    }
+
+    var brightness = Math.floor(colorSum / (image.width*image.height));
+    canvas.remove();
+    console.log(brightness);
+    return(brightness);
 }
 function selectAll() {
     var btnSelect = document.getElementById('btn-select');
