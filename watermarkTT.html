@@ -197,17 +197,18 @@ async function changeMarkType(event){
         var mark_type = $('#sl-mark-type')[0].value;
         var listSelected = document.getElementsByClassName("thumbChecked");
         for (var i = 0; i < listSelected.length; i++) {
-            if (listSelected[i].children[0].getAttribute('origin')) {
-                var currentIndex = i;
-                var canvas = await markImage(listSelected[i].children[0].getAttribute('origin'), mark_type);
-                // URL.revokeObjectURL(listSelected[i].children[0].src); 
-                var blob = await new Promise(resolve => canvas.toBlob(resolve));  
-                url = URL.createObjectURL(blob);
-                listSelected[currentIndex].children[0].src = url;
-                listSelected[currentIndex].children[1].href = url;
-                listSelected[currentIndex].children[0].setAttribute("mark-type", mark_type);
-                canvas.remove();
-            }
+            (async index=>{
+                if (listSelected[index].children[0].getAttribute('origin')) {
+                    var canvas = await markImage(listSelected[index].children[0].getAttribute('origin'), mark_type);
+                    // URL.revokeObjectURL(listSelected[index].children[0].src); 
+                    var blob = await new Promise(resolve => canvas.toBlob(resolve));  
+                    url = URL.createObjectURL(blob);
+                    listSelected[index].children[0].src = url;
+                    listSelected[index].children[1].href = url;
+                    listSelected[index].children[0].setAttribute("mark-type", mark_type);
+                    canvas.remove();
+                }
+            })(i);
         }
     }
 }
@@ -289,7 +290,7 @@ async function markImage(imageObjectURL, mark_type){
     // console.log(await getImageBrightness(canvas, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio));
     if (mark_type == 1){
         context.drawImage(wmLogo1, fix_size * 0.01 * wmscale_ratio, fix_size * 0.003 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogo1.height / wmLogo1.width * fix_size * 0.33 * wmscale_ratio); //lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
-        context.drawImage(wmLogoBottom1, canvas.width - fix_size * 0.01 * wmscale_ratio - fix_size * 0.33 * wmscale_ratio, canvas.height - fix_size * 0.01 * wmscale_ratio - wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio);
+        context.drawImage(wmLogoBottom1, canvas.width - fix_size * 0.35 * wmscale_ratio, canvas.height - fix_size * 0.02 * wmscale_ratio - wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio);
     }
     else {
         context.drawImage(wmBottom, 0, canvas.height - (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width), canvas.width, (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width));
