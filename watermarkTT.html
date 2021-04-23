@@ -17,9 +17,10 @@
                 <div class="upload-btn-wrapper">
                     <button class="btn btn-primary" onclick="document.getElementById('product-image-upload').click();">Upload a file</button>
                     <input type="file" name="product-image-upload" id="product-image-upload" accept=".jpeg, .jpg, .png, .webp" multiple />
-                    <select class="form-select" aria-label="Default select example" id="sl-mark-type" onclick="changeMarkType(event)">
+                    <select class="form-select" aria-label="Default select example" id="sl-mark-type" onchange="changeMarkType(event)">
                       <option selected value="0">Mặc định</option>
                       <option value="1">Khách Sạn</option>
+                      <option value="2">Nha Khoa</option>
                     </select>
                 </div>
                 <div>
@@ -193,7 +194,7 @@ image_uploader.addEventListener('change', function(e) {
 
 });
 async function changeMarkType(event){
-    if (event.pointerId == 0){
+    // console.log(event);
         var mark_type = $('#sl-mark-type')[0].value;
         var listSelected = document.getElementsByClassName("thumbChecked");
         for (var i = 0; i < listSelected.length; i++) {
@@ -210,7 +211,6 @@ async function changeMarkType(event){
                 }
             })(i);
         }
-    }
 }
 async function preloadResource() {
     window.wmBottom = new Image();
@@ -221,6 +221,8 @@ async function preloadResource() {
     window.wmCenter2 = new Image();
     window.wmLogoBottom = new Image();
     window.wmLogoBottom1 = new Image();
+    window.wmLogoBottom2 = new Image();
+    window.wmNhaKhoa = new Image();
     wmBottom.src = "TT/bottom.png";
     wmLogo.src = "TT/logo.png";
     wmLogo1.src = "TT/logon1.png";
@@ -229,7 +231,9 @@ async function preloadResource() {
     wmCenter2.src = "TT/center2.png";
     wmLogoBottom.src = "TT/logobottom.png";
     wmLogoBottom1.src = "TT/logobottomn1.png";
-    await Promise.all([wmBottom.decode(), wmLogo.decode(), wmLogo1.decode(), wmHotline.decode(), wmCenter.decode(), wmCenter2.decode(), wmLogoBottom.decode(), wmLogoBottom1.decode()]);
+    wmLogoBottom2.src = "TT/hl2.png";
+    wmNhaKhoa.src = "TT/nhakhoa.png";
+    await Promise.all([wmBottom.decode(), wmLogo.decode(), wmLogo1.decode(), wmHotline.decode(), wmCenter.decode(), wmCenter2.decode(), wmLogoBottom.decode(), wmLogoBottom1.decode(), wmLogoBottom2.decode(), wmNhaKhoa.decode()]);
 }
 async function drawImage(filename, imageObjectURL) {
     var mark_type = $('#sl-mark-type')[0].value;
@@ -291,6 +295,11 @@ async function markImage(imageObjectURL, mark_type){
     if (mark_type == 1){
         context.drawImage(wmLogo1, fix_size * 0.01 * wmscale_ratio, fix_size * 0.003 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogo1.height / wmLogo1.width * fix_size * 0.33 * wmscale_ratio); //lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
         context.drawImage(wmLogoBottom1, canvas.width - fix_size * 0.35 * wmscale_ratio, canvas.height - fix_size * 0.02 * wmscale_ratio - wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom1.height / wmLogoBottom1.width * fix_size * 0.33 * wmscale_ratio);
+    }
+    else if (mark_type == 2){
+        context.drawImage(wmLogo1, fix_size * 0.01 * wmscale_ratio, fix_size * 0.003 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogo1.height / wmLogo1.width * fix_size * 0.33 * wmscale_ratio); //lấy tỉ lê h/w * với chiều rộng hiện tại là ra chiều cao
+        context.drawImage(wmLogoBottom2, canvas.width - fix_size * 0.33 * wmscale_ratio, canvas.height - wmLogoBottom2.height / wmLogoBottom2.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmLogoBottom2.height / wmLogoBottom2.width * fix_size * 0.33 * wmscale_ratio);
+        context.drawImage(wmNhaKhoa, fix_size * 0.01 * wmscale_ratio, canvas.height - wmNhaKhoa.height / wmNhaKhoa.width * fix_size * 0.33 * wmscale_ratio, fix_size * 0.33 * wmscale_ratio, wmNhaKhoa.height / wmNhaKhoa.width * fix_size * 0.33 * wmscale_ratio);
     }
     else {
         context.drawImage(wmBottom, 0, canvas.height - (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width), canvas.width, (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width));
