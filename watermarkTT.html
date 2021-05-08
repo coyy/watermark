@@ -320,13 +320,13 @@ async function markImage(imageObjectURL, mark_type){
         context.drawImage(wmBottom, 0, canvas.height - (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width), canvas.width, (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width));
         context.drawImage(wmLogoBottom, canvas.width - canvas.width * 0.15 - fix_size * 0.25  / 2, canvas.height - fix_size / 12 - fix_size * 0.3  / 2, fix_size * 0.25 , fix_size * 0.25  * wmLogoBottom.height/wmLogoBottom.width);
         if (mark_type == 3){//hong
-            context.drawImage(wmLogoHong, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoHong.height / wmLogoHong.width * (isheight ? 1 : canvas.height / canvas.width));
+            context.drawImage(wmLogoHong, fix_size * 0.01 * wmscale_ratio, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoHong.height / wmLogoHong.width * (isheight ? 1 : canvas.height / canvas.width));
             context.drawImage(wm0838344444, canvas.width * 0.05, canvas.height - fix_size / 20 - fix_size * 0.4 * wm0838344444.height/wm0838344444.width/2, fix_size * 0.4, fix_size * 0.4 * wm0838344444.height/wm0838344444.width);
         }else if (mark_type == 4){//min
-            context.drawImage(wmLogoMin, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoMin.height / wmLogoMin.width * (isheight ? 1 : canvas.height / canvas.width));
+            context.drawImage(wmLogoMin, fix_size * 0.01 * wmscale_ratio, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoMin.height / wmLogoMin.width * (isheight ? 1 : canvas.height / canvas.width));
             context.drawImage(wm0813866868, canvas.width * 0.05, canvas.height - fix_size / 20 - fix_size * 0.4 * wm0813866868.height/wm0813866868.width/2, fix_size * 0.4, fix_size * 0.4 * wm0813866868.height/wm0813866868.width);
         }else if (mark_type == 5){//nhan
-            context.drawImage(wmLogoNhan, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoNhan.height / wmLogoNhan.width * (isheight ? 1 : canvas.height / canvas.width));
+            context.drawImage(wmLogoNhan, fix_size * 0.01 * wmscale_ratio, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogoNhan.height / wmLogoNhan.width * (isheight ? 1 : canvas.height / canvas.width));
             context.drawImage(wm0837974444, canvas.width * 0.05, canvas.height - fix_size / 20 - fix_size * 0.4 * wm0837974444.height/wm0837974444.width/2, fix_size * 0.4, fix_size * 0.4 * wm0837974444.height/wm0837974444.width);
         }else {
             context.drawImage(wmLogo, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
