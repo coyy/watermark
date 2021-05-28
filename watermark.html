@@ -18,8 +18,13 @@
                     <button class="btn btn-primary" onclick="document.getElementById('product-image-upload').click();">Upload a file</button>
                     <input type="file" name="product-image-upload" id="product-image-upload" accept=".jpeg, .jpg, .png, .webp" multiple />
                     <select class="form-select" aria-label="Default select example" id="sl-mark-type" onchange="changeMarkType(event)">
-                      <option selected value="0">Mặc định</option>
-                      <option value="1">Cũ</option>
+                      <option value="0">Mặc định</option>
+                      <option selected value="1">Cũ</option>
+                      <option value="0919604444">0919604444</option>
+                      <option value="0836344444">0836344444</option>
+                      <option value="0817801111">0817801111</option>
+                      <option value="0774194444">0774194444</option>
+                      <option value="0898168338">0898168338</option>
                     </select>
                 </div>
                 <div>
@@ -252,10 +257,20 @@ async function preloadResource() {
     window.wmCu = new Image();
     window.wmLogoGiua = new Image();
     window.wmLogoGoc = new Image();
+    window.wm0919604444 = new Image();
+    window.wm0836344444 = new Image();
+    window.wm0817801111 = new Image();
+    window.wm0774194444 = new Image();
+    window.wm0898168338 = new Image();
     wmCu.src = "AT247/watermark aothun247-o1.png";
     wmLogoGiua.src = "AT247/logogiua.png";
     wmLogoGoc.src = "AT247/logogoc.png";
-    await Promise.all([wmCu.decode(), wmLogoGiua.decode(), wmLogoGoc.decode()]);
+    wm0919604444.src = "AT247/wm0919604444.png";
+    wm0836344444.src = "AT247/wm0836344444.png";
+    wm0817801111.src = "AT247/wm0817801111.png";
+    wm0774194444.src = "AT247/wm0774194444.png";
+    wm0898168338.src = "AT247/wm0898168338.png";
+    await Promise.all([wmCu.decode(), wmLogoGiua.decode(), wmLogoGoc.decode(), wm0919604444.decode(), wm0836344444.decode(), wm0817801111.decode(), wm0774194444.decode(), wm0898168338.decode()]);
 }
 async function markImage(imageObjectURL, mark_type){
     // console.log(e);
@@ -274,13 +289,29 @@ async function markImage(imageObjectURL, mark_type){
     canvas.width = image.width * scale_ratio;
     canvas.height = image.height * scale_ratio;
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-    if (mark_type == 1){//cũ
-        context.drawImage(wmCu, (canvas.width - fix_size) / 2, (canvas.height - fix_size) / 2, fix_size, fix_size); 
-    }
-    else {
-        context.drawImage(wmLogoGiua, canvas.width * 0.37 - fix_size * 0.20, canvas.height * 0.4  - wmLogoGiua.height / wmLogoGiua.width * fix_size *  0.19, fix_size * 0.38, wmLogoGiua.height / wmLogoGiua.width * fix_size * 0.38);
-        context.drawImage(wmLogoGoc, canvas.width - fix_size * wmscale_ratio* 0.13 , canvas.height -  fix_size * wmscale_ratio * 0.13 * wmLogoGoc.height / wmLogoGoc.width, fix_size * wmscale_ratio * 0.13,  fix_size * wmscale_ratio * 0.13 * wmLogoGoc.height / wmLogoGoc.width);
+    switch (mark_type) {
+        case "1":
+            context.drawImage(wmCu, (canvas.width - fix_size) / 2, (canvas.height - fix_size) / 2, fix_size, fix_size);
+            break;
+        case "0919604444":
+            context.drawImage(wm0919604444, (canvas.width - fix_size) / 2, (canvas.height - fix_size) / 2, fix_size, fix_size);
+            break;
+        case "0836344444":
+            context.drawImage(wm0836344444, (canvas.width - fix_size) / 2, (canvas.height - fix_size) / 2, fix_size, fix_size);
+            break;
+        case "0817801111":
+            context.drawImage(wm0817801111, (canvas.width - fix_size) / 2, (canvas.height - fix_size) / 2, fix_size, fix_size);
+            break;
+        case "0774194444":
+            context.drawImage(wm0774194444, (canvas.width - fix_size) / 2, (canvas.height - fix_size) / 2, fix_size, fix_size);
+            break;
+        case "0898168338":
+            context.drawImage(wm0898168338, (canvas.width - fix_size) / 2, (canvas.height - fix_size) / 2, fix_size, fix_size);
+            break;
+        default:
+            context.drawImage(wmLogoGiua, canvas.width * 0.37 - fix_size * 0.20, canvas.height * 0.4  - wmLogoGiua.height / wmLogoGiua.width * fix_size *  0.19, fix_size * 0.38, wmLogoGiua.height / wmLogoGiua.width * fix_size * 0.38);
+            context.drawImage(wmLogoGoc, canvas.width - fix_size * wmscale_ratio* 0.13 , canvas.height -  fix_size * wmscale_ratio * 0.13 * wmLogoGoc.height / wmLogoGoc.width, fix_size * wmscale_ratio * 0.13,  fix_size * wmscale_ratio * 0.13 * wmLogoGoc.height / wmLogoGoc.width);
+            break;
     }
     return canvas;
 }
