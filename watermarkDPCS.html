@@ -34,7 +34,7 @@
                     </p>
                     <!-- <button class="button" id="btn-select-mode" onclick="selectMode()">Select Mode</button> -->
                     <button class="button" id="btn-select" onclick="selectAll()">Select All</button>
-                    <button class="button" id="btn-download" onclick="generateZIP()" style="display: none">Download</button>
+                    <button class="button" id="btn-download" onclick="downloadImages()" style="display: none">Download</button>
                 </div>
             </div>
             <div id="result">
@@ -405,41 +405,38 @@ function selectAll() {
 document.getElementById('result').addEventListener('click', function(e) {
     // console.log(e.target);
     if (e.target.classList.contains('imageItem')) {
-        if (e.target.parentElement.classList.contains('thumbChecked')) {
-            e.target.parentElement.classList.remove("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length == 0) {
-                document.getElementById('btn-download').style.display = "none";
-            }
-        } else {
-            e.target.parentElement.classList.add("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length != 0) {
-                document.getElementById('btn-download').style.display = "inline-block";
-            }
-        }
+        var parentItem = e.target.parentElement;
+        var childrenItem = e.target;
     }
     if (e.target.classList.contains('imageBlock')) {
-        if (e.target.classList.contains('thumbChecked')) {
-            e.target.classList.remove("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length == 0) {
-                document.getElementById('btn-download').style.display = "none";
-            }
-        } else {
-            e.target.classList.add("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length != 0) {
-                document.getElementById('btn-download').style.display = "inline-block";
-            }
-        }
+        var parentItem = e.target;
+        var childrenItem = e.target.children[0];
+    }
+    
+    if (parentItem.classList.contains('thumbChecked')) {
+        links = links.splice(links.indexOf(childrenItem));
+        parentItem.classList.remove("thumbChecked");
+    } else {
+        parentItem.classList.add("thumbChecked");
+        links.push(childrenItem);
+    }
+    if (document.getElementsByClassName("thumbChecked").length == 0) {
+        document.getElementById('btn-download').style.display = "none";
+    }
+    if (document.getElementsByClassName("thumbChecked").length != 0) {
+        document.getElementById('btn-download').style.display = "inline-block";
     }
 });
 
-function generateZIP() {
-    // console.log('TEST');
+function downloadImages() {
+    // console.log(links);
     var zip = new JSZip();
     var count = 0;
     var uniqueObject = [];
     var hashImages = [];
     var zipFilename = "Pictures.zip";
     links.forEach(function(url, i) {
+        // download1(url);
         let filename = url.getAttribute("download");
         // console.log(filename);
         // loading a file and add it in a zip file
@@ -473,6 +470,23 @@ function generateZIP() {
             }
         });
     });
+    function download1(img) {
+        
+        let filename = img.getAttribute("download");
+        //creating an invisible element
+        var element = document.createElement('a');
+        element.setAttribute('href', img.src);
+        element.setAttribute('download', filename);
+    
+        // Above code is equivalent to
+        // <a href="path of file" download="file name">
+        document.body.appendChild(element);
+    
+        //onClick property
+        element.click();
+    
+        document.body.removeChild(element);
+    }
 }
 </script>
 
