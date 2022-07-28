@@ -20,7 +20,7 @@
                     <select class="form-select" aria-label="Default select example" id="sl-mark-type" onclick="changeMarkType(event)">
                         <option selected value="0">Mặc định</option>
                         <!-- <option value="1">Cũ</option> -->
-                        <option value="3">Chèn với hình 1:1</option>
+                        <option value="3">Logo ẩn ở giữa</option>
                         <option value="200">K chèn</option>
                     </select>
                 </div>
@@ -29,10 +29,12 @@
                         Thả hình ảnh, paste hoặc upload file tại đây.
                         <br>
                         Có thể up nhiều hình ảnh 1 lúc và chọn rồi bấm download ở dưới, có thể mất khá nhiều thời gian khi upload nhiều ảnh. Vui lòng đợi đến khi có cửa sổ tải xuống, tránh click nhiều lần.
+                        <br>
+                        <span style="color: brown;">Hãy đổi kiểu chèn sang kiểu khác nếu watermark làm hình ảnh bị rối mắt. Chọn hình ảnh cần đổi kiểu chèn sau đó đổi phần kiểu chèn.</span>
                     </p>
                     <!-- <button class="button" id="btn-select-mode" onclick="selectMode()">Select Mode</button> -->
                     <button class="button" id="btn-select" onclick="selectAll()">Select All</button>
-                    <button class="button" id="btn-download" onclick="generateZIP()" style="display: none">Download</button>
+                    <button class="button" id="btn-download" onclick="downloadImages()" style="display: none">Download</button>
                 </div>
             </div>
             <div id="result">
@@ -294,11 +296,11 @@ async function markImage(imageObjectURL, mark_type) {
     await image.decode();
 
     var isheight = image.width < image.height ? true : false;
-    var base_size = isheight ? image.width : image.height;
-    var scale_ratio = image.width < 600 || image.height < 600 ? 600 / base_size : 1;
+    var base_size = isheight ? image.width : image.height;//
+    var scale_ratio = image.width < 600 || image.height < 600 ? 600 / base_size : 1;//tăng kích thước hình ảnh nếu hình ảnh nhỏ hơn 600
     var frame_ratio = isheight ? image.height / image.width : image.width / image.width;
     var wmscale_ratio = frame_ratio;
-    var fix_size = scale_ratio * base_size;
+    var fix_size = scale_ratio * base_size;//chiều ngắn nhất của hình ảnh
 
     var canvas = document.createElement("CANVAS");
     var context = canvas.getContext('2d');
@@ -330,13 +332,15 @@ async function markImage(imageObjectURL, mark_type) {
     // context.drawImage(wmCenter2, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter2.height / wmCenter2.width * fix_size * 0.3 * wmscale_ratio);
     // }
 
+    if (mark_type == 3){
+        context.drawImage(wmLogo, 0, 0, canvas.width * 0.3 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.3 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmCenter, canvas.width - canvas.width / 2 - fix_size * 0.3 * wmscale_ratio / 2, canvas.height - canvas.height / 2 - wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio / 2, fix_size * 0.3 * wmscale_ratio, wmCenter.height / wmCenter.width * fix_size * 0.3 * wmscale_ratio);
+        context.drawImage(wmNumber, canvas.width - 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width) - canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - ((isheight ? wmNumber.height * canvas.width / wmNumber.width : wmNumber.height * canvas.height / wmNumber.width)+50)*0.4, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmNumber.height / wmNumber.width * (isheight ? 1 : canvas.height / canvas.width));
+    }
     if (mark_type == 0){
-        // context.drawImage(wmLeft, 0, 0, wmLeft.width * (isheight ? canvas.height / wmLeft.height : canvas.width / wmLeft.height), canvas.height);
-        // context.drawImage(wmBottom, 0, canvas.height - (isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width), canvas.width, isheight ? wmBottom.height * canvas.width / wmBottom.width : wmBottom.height * canvas.height / wmBottom.width);
-        // context.drawImage(wmLogo, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
-        // context.drawImage(wmWebsite, 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - (isheight ? wmWebsite.height * canvas.width / wmWebsite.width : wmWebsite.height * canvas.height / wmWebsite.width) / 2 - canvas.width * 0.4 * wmWebsite.height / wmWebsite.width * (isheight ? 1 : canvas.height / canvas.width) / 6, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmWebsite.height / wmWebsite.width * (isheight ? 1 : canvas.height / canvas.width));
-        // context.drawImage(wmName, canvas.width - 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width) - canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), (isheight ? wmName.height * canvas.width / wmName.width : wmName.height * canvas.height / wmName.width) / 16 - canvas.width * 0.4 * wmName.height / wmName.width * (isheight ? 1 : canvas.height / canvas.width) / 16, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmName.height / wmName.width * (isheight ? 1 : canvas.height / canvas.width));
-        // context.drawImage(wmHotline, canvas.width - 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width) - canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - (isheight ? wmHotline.height * canvas.width / wmHotline.width : wmHotline.height * canvas.height / wmHotline.width) / 1.5 - canvas.width * 0.4 * wmHotline.height / wmHotline.width * (isheight ? 1 : canvas.height / canvas.width) / 1.5, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmHotline.height / wmHotline.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmLogo, 0, 0, canvas.width * 0.3 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.3 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmCenter1, canvas.width - canvas.width / 2 - fix_size / 2, canvas.height - canvas.height / 2 - wmCenter1.height / wmCenter1.width * fix_size / 2, fix_size, wmCenter1.height / wmCenter1.width * fix_size);
+        context.drawImage(wmNumber, canvas.width - 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width) - canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - ((isheight ? wmNumber.height * canvas.width / wmNumber.width : wmNumber.height * canvas.height / wmNumber.width)+50)*0.4, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmNumber.height / wmNumber.width * (isheight ? 1 : canvas.height / canvas.width));
     }
     return canvas;
 }
@@ -401,41 +405,38 @@ function selectAll() {
 document.getElementById('result').addEventListener('click', function(e) {
     // console.log(e.target);
     if (e.target.classList.contains('imageItem')) {
-        if (e.target.parentElement.classList.contains('thumbChecked')) {
-            e.target.parentElement.classList.remove("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length == 0) {
-                document.getElementById('btn-download').style.display = "none";
-            }
-        } else {
-            e.target.parentElement.classList.add("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length != 0) {
-                document.getElementById('btn-download').style.display = "inline-block";
-            }
-        }
+        var parentItem = e.target.parentElement;
+        var childrenItem = e.target;
     }
     if (e.target.classList.contains('imageBlock')) {
-        if (e.target.classList.contains('thumbChecked')) {
-            e.target.classList.remove("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length == 0) {
-                document.getElementById('btn-download').style.display = "none";
-            }
-        } else {
-            e.target.classList.add("thumbChecked");
-            if (document.getElementsByClassName("thumbChecked").length != 0) {
-                document.getElementById('btn-download').style.display = "inline-block";
-            }
-        }
+        var parentItem = e.target;
+        var childrenItem = e.target.children[0];
+    }
+    
+    if (parentItem.classList.contains('thumbChecked')) {
+        links = links.splice(links.indexOf(childrenItem));
+        parentItem.classList.remove("thumbChecked");
+    } else {
+        parentItem.classList.add("thumbChecked");
+        links.push(childrenItem);
+    }
+    if (document.getElementsByClassName("thumbChecked").length == 0) {
+        document.getElementById('btn-download').style.display = "none";
+    }
+    if (document.getElementsByClassName("thumbChecked").length != 0) {
+        document.getElementById('btn-download').style.display = "inline-block";
     }
 });
 
-function generateZIP() {
-    // console.log('TEST');
+function downloadImages() {
+    // console.log(links);
     var zip = new JSZip();
     var count = 0;
     var uniqueObject = [];
     var hashImages = [];
     var zipFilename = "Pictures.zip";
     links.forEach(function(url, i) {
+        // download1(url);
         let filename = url.getAttribute("download");
         // console.log(filename);
         // loading a file and add it in a zip file
@@ -469,6 +470,23 @@ function generateZIP() {
             }
         });
     });
+    function download1(img) {
+        
+        let filename = img.getAttribute("download");
+        //creating an invisible element
+        var element = document.createElement('a');
+        element.setAttribute('href', img.src);
+        element.setAttribute('download', filename);
+    
+        // Above code is equivalent to
+        // <a href="path of file" download="file name">
+        document.body.appendChild(element);
+    
+        //onClick property
+        element.click();
+    
+        document.body.removeChild(element);
+    }
 }
 </script>
 
