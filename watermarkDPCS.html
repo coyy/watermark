@@ -18,7 +18,9 @@
                     <button class="btn btn-primary" onclick="document.getElementById('product-image-upload').click();">Upload a file</button>
                     <input type="file" name="product-image-upload" id="product-image-upload" accept=".jpeg, .jpg, .png, .webp" multiple />
                     <select class="form-select" aria-label="Default select example" id="sl-mark-type" onclick="changeMarkType(event)">
-                        <option selected value="0">Mặc định</option>
+                        <option value="0">Mặc định</option>
+                        <option selected value="0909-Vang">Mới Màu Vàng - 9/9/2022</option>
+                        <option selected value="0909-Nau">Mới Màu Nâu - 9/9/2022</option>
                         <!-- <option value="1">Cũ</option> -->
                         <option value="3">Logo ẩn ở giữa</option>
                         <option value="200">K chèn</option>
@@ -250,7 +252,19 @@ async function preloadResource() {
     wmCenter.src = "DPCS/ncenter.png";
     wmCenter1.src = "DPCS/ncenter1.png";
     wmNumber.src = "DPCS/nnumber.png";
-    await Promise.all([wmLeft.decode(), wmRight.decode(), wmLogo.decode(), wmCenter.decode(), wmCenter1.decode(), wmNumber.decode()]);
+    // 09/09/2022
+    window.wmLogo_09092022_Vang = new Image();
+    window.wmLogo_09092022_Nau = new Image();
+    window.wmNumber_09092022_Vang = new Image();
+    window.wmNumber_09092022_Nau = new Image();
+    wmLogo_09092022_Vang.src = "DPCS/09.09.2022/logo-vang.png";
+    wmLogo_09092022_Nau.src = "DPCS/09.09.2022/logo-nau.png";
+    wmNumber_09092022_Vang.src = "DPCS/09.09.2022/sdt-vang.png";
+    wmNumber_09092022_Nau.src = "DPCS/09.09.2022/sdt-nau.png";
+    await Promise.all([
+        wmLeft.decode(), wmRight.decode(), wmLogo.decode(), wmCenter.decode(), wmCenter1.decode(), wmNumber.decode(),
+        wmLogo_09092022_Vang.decode(), wmLogo_09092022_Nau.decode(), wmNumber_09092022_Vang.decode(), wmNumber_09092022_Nau.decode()
+    ]);
 }
 async function drawImage(filename, imageObjectURL) {
     var mark_type = $('#sl-mark-type')[0].value;
@@ -341,6 +355,14 @@ async function markImage(imageObjectURL, mark_type) {
         context.drawImage(wmLogo, 0, 0, canvas.width * 0.3 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.3 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
         context.drawImage(wmCenter1, canvas.width - canvas.width / 2 - fix_size / 2, canvas.height - canvas.height / 2 - wmCenter1.height / wmCenter1.width * fix_size / 2, fix_size, wmCenter1.height / wmCenter1.width * fix_size);
         context.drawImage(wmNumber, canvas.width - 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width) - canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - ((isheight ? wmNumber.height * canvas.width / wmNumber.width : wmNumber.height * canvas.height / wmNumber.width)+50)*0.4, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmNumber.height / wmNumber.width * (isheight ? 1 : canvas.height / canvas.width));
+    }
+    if (mark_type == "0909-Vang") {
+        context.drawImage(wmLogo_09092022_Vang, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmNumber_09092022_Vang, canvas.width - 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width) - canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - ((isheight ? wmNumber.height * canvas.width / wmNumber.width : wmNumber.height * canvas.height / wmNumber.width)+50)*0.4, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmNumber.height / wmNumber.width * (isheight ? 1 : canvas.height / canvas.width));
+    }
+    if (mark_type == "0909-Nau") {
+        context.drawImage(wmLogo_09092022_Nau, 0, 0, canvas.width * 0.25 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.25 * wmLogo.height / wmLogo.width * (isheight ? 1 : canvas.height / canvas.width));
+        context.drawImage(wmNumber_09092022_Nau, canvas.width - 20 * 0.4 * (isheight ? 1 : canvas.height / canvas.width) - canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.height - ((isheight ? wmNumber.height * canvas.width / wmNumber.width : wmNumber.height * canvas.height / wmNumber.width)+50)*0.4, canvas.width * 0.4 * (isheight ? 1 : canvas.height / canvas.width), canvas.width * 0.4 * wmNumber.height / wmNumber.width * (isheight ? 1 : canvas.height / canvas.width));
     }
     return canvas;
 }
